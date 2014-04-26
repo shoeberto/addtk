@@ -5,7 +5,7 @@ ag-dev debugging toolkit (pronounced "attic")
 
 follow the comments in config.php to configure your deployment.
 
-copy-paste up to 10 captured Ajax requests into the $test\_str[n] variables, and set $varnum to target the appropriate one.
+open addtk.php and copy-paste up to 10 captured Ajax requests into the $test\_str[n] variables, and set $varnum to target the appropriate one.
 
 access addtk.php via your browser to have it run through whatever Ajax request you want to debug. you can throw the following functions into the files you're debugging to get more useful information:
 
