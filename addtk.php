@@ -1,45 +1,47 @@
 <?php
+
+include(dirname(__FILE__) . '/addtk-config.php');
+
+// enter your current profile here
+$current_profile = 'greenplan';
+
+// this array holds any ajax request URLs you want to debug
+$test_ajax_array = array(
+	0 => '',
+	1 => '',
+	2 => '',
+	3 => '',
+	4 => '',
+	5 => '',
+	// add however many you want to use
+	);
+
+// this variable is the index into $test_ajax_array - use it to point to the
+// ajax string you're currently debugging
+$varnum = 0;
+
 // this setting appears useless, much like the rest of php
 ini_set('display_errors', '1');
-include(dirname(__FILE__) . '/config.php');
-include(dirname(__FILE__) . '/functions.php');
+include(dirname(__FILE__) . '/agfunctions.php');
 
-// set this to whatever string you want to debug
-$varnum = 1;
+$init_success = aginit($current_profile);
 
-// comments go here
-$test_str1 = '';
-// comments go here
-$test_str2 = '';
-// comments go here
-$test_str3 = '';
-// comments go here
-$test_str4 = '';
-// comments go here
-$test_str5 = '';
-// comments go here
-$test_str6 = '';
-// comments go here
-$test_str7 = '';
-// comments go here
-$test_str8 = '';
-// comments go here
-$test_str9 = '';
-// comments go here
-$test_str0 = '';
+if (!$init_success)
+{
+	print_r("Error loading configuration for $current_profile.<br />");
+}
 
-$test_str_var = 'test_str' . $varnum;
+print_r('<center>ADDTK Debug Output</center>');
 
-$no_true_test_str = str_replace(GATEWAY_URL . '?',
+$parsed_ajax_request = str_replace(GATEWAY_URL . '?',
 	'',
-	$$test_str_var);
+	$test_ajax_array[$varnum]);
 
 // its
 // business
 // time
-parse_str($no_true_test_str, $_REQUEST);
+parse_str($parsed_ajax_request, $_REQUEST);
 
-print_r('<center>ADDTK Debug Output</center>');
 print_r('<b>'.$_REQUEST['mode'].'</b><br>');
 
 include(WORKING_DIR . '/' . GATEWAY_FILE);
