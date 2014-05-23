@@ -1,0 +1,42 @@
+First time setup:
+1. Copy addtk/ into some directory on the machine you do your work on.
+2. Make a symlink to point to your addtk/ installation dir such that it can be accessed via your web browser.
+cd public_html
+ln -s /path/to/addtk/ addtk/
+
+Project setup:
+1. Copy config/config-base.php and name it to whatever config you want it to be for your project.
+cp config/config-base.php config/my-project-name.php
+2. Read the comments in your config copy and fill it in as appropriate.
+3. Open addtk.php and set the $current_profile string to my-project-name (the path and .php extension are automatically added)
+4. Make sure the base directory of your project (not addtk) is writeable by www-data. An easy way to do this is:
+chmod 777 /path/to/my/project
+(NOTE: This should not be done in a production environment ever, ever, ever, ever. But you shouldn't be using this script in production, either.)
+5. Open your browser and go to the URL for your addtk instance. For example, if you made your symlink above in:
+/home/my-user-name/public_html/addtk
+Then you would go to:
+http://my-host-machine/~my-user-name/addtk/addtk.php
+This will do the first time setup.
+6. You now have a /debug/ directory in your project's base dir. It contains a symlink, index.php, which points to addtk.php.
+
+Debugging with addtk:
+Once your project is setup, you can open your index.php symlink in your favorite code editor as a part of your project. This points to addtk.php,
+which is the main dashboard for setting up a debugging session.
+
+These are the only variables that should need tweaked:
+$current_profile: This is the string name of the config file to be loaded at execution time. This will change what project you debug.
+$test_ajax_array: This array holds any number of ajax request strings you've captured from the browser. Sometimes it is useful to switch between many
+different Ajax requests with variations in arguments, hence why it's an array.
+$varnum: The number corresponding the the $test_ajax_array entry that you want to test. This is just an index into $test_ajax_array.
+
+Once these variables have been set, you can navigate to
+http://my-host/my/project/path/debug
+And you will see addtk execute the current Ajax request and print out the result. There are a few extra functions you can put into your code, however, to aid debugging:
+agbreak     - halts execution and prints a stacktrace.
+agbacktrace - prints a stacktrace
+agvar       - pretty prints a variable with a label
+
+These are wrappers for common PHP functionality that can be useful when tracing through arbitrary Ajax requests. All output will be printed in the addtk
+debug output.
+
+The next WIP functionality is integration with Xdebug, which is remote PHP debugging. Since addtk gives a consistent entry point for execution Ajax requests, we now have the option to truly debug PHP - however, this needs more evaluation and documentation before it can be considered an official feature.
