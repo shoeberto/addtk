@@ -3,7 +3,7 @@
 include(dirname(__FILE__) . '/addtk-config.php');
 
 // enter your current profile here
-$current_profile = '';
+$current_profile = 'config-base';
 
 // this array holds any ajax request URLs you want to debug
 $test_ajax_array = array(
